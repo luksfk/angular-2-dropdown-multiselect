@@ -67,6 +67,7 @@ export interface IMultiSelectSettings {
    * Set the focus back to the input control when the dropdown closed
    */
   focusBack?: boolean;
+  useArray?: boolean;
 }
 
 export interface IMultiSelectTexts {

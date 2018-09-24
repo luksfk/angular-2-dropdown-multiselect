@@ -136,7 +136,8 @@ export class MultiselectDropdownComponent
     selectAddedValues: false,
     ignoreLabels: false,
     maintainSelectionOrderInTitle: false,
-    focusBack: true
+    focusBack: true,
+    useArray: true
   };
   defaultTexts: IMultiSelectTexts = {
     checkAll: 'Check all',
@@ -295,10 +296,19 @@ export class MultiselectDropdownComponent
 
   writeValue(value: any): void {
     if (value !== undefined && value !== null) {
-      this.model = Array.isArray(value) ? value : [value];
+      if (this.settings.useArray) {
+        this.model = Array.isArray(value) ? value : [value];
+      } else {
+        this.model = value;
+      }
+
       this.ngDoCheck();
     } else {
-      this.model = [];
+      if (this.settings.useArray) {
+        this.model = [];
+      } else {
+        this.model = null;
+      }
     }
   }
 
@@ -383,7 +393,7 @@ export class MultiselectDropdownComponent
       return;
     }
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.maybeStopPropagation(_event);
       this.maybePreventDefault(_event);
       const index = this.model.indexOf(option.id);
